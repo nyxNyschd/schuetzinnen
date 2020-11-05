@@ -1,0 +1,66 @@
+#import spacy
+
+# nlp = spacy.load("en_core_web_sm")
+# doc = nlp("Apple is looking at buying U.K. startup for $1 billion")
+# for token in doc:
+#   print(token.text, token.pos_, token.dep_)
+
+# TOKENISATION
+# nlp = spacy.load("en_core_web_sm")
+# doc = nlp("Apple is looking at buying U.K. startup for $1 billion")
+# for token in doc:
+#   print(token.text)
+
+
+# PART OF A SPEECH TAGING
+
+# nlp = spacy.load("en_core_web_sm")
+# doc = nlp("Apple is looking at buying U.K. startup for $1 billion")
+
+# for token in doc:
+#    print(token.text, token.lemma_, token.pos_, token.tag_, token.dep_,
+#           token.shape_, token.is_alpha, token.is_stop)
+
+
+# WORD SIMILARITIES
+# nlp = spacy.load("en_core_web_md")
+# tokens = nlp("dog cat banana afskfsd")
+
+# for token in tokens:
+#   print(token.text, token.has_vector, token.vector_norm, token.is_oov)
+
+
+#import re
+
+#text=("ich gehe essen hajaksjudncue662562453125712..,,.0898989")
+#regex = re.compile('[@_!-#$%&()<>?/|}{:,.]')
+#if(regex.search(text)== None):
+ #   print("Keine special characters")
+#else:
+ #   print("hat special characters")
+  #  text2 = text.sub(r'[@_!-#$%&()<>?/|}{:,.]',' ',text)
+   # print(text2)
+
+
+import re
+text ="""&@@@@@qq#1,45233220,Surface work for roads,"Asphalt Works for 5 Municipalities, 
+    Framework Agreement","The competition concerns the delivery of 
+    asphalt works on municipal roads, streets, foot and cycle paths, 
+    pavements, squares, parking places, some private roads and any 
+    selected new installations that are operated and maintained by the individual
+    municipalities. The annual value of the procurement is estimated to be: 15 000 000 
+    NOK-30 000 000 NOK excluding VAT per year. The value is an estimate and, thus, 
+    not binding. See the tender documentation for further information.","
+    Lots/groupsTenders cannot be submitted for parts of the assignment and alternative
+    tenders are not allowed. The contracting authority has considered dividing up the 
+    assignment in accordance with PPR  19-4, but has decided that this is not suitable 
+    for this type of contract."",,,,,,,,,,,,,,,"2,45314310,Installation of cable laying,Provisional"""
+​
+print (re.sub('^w.,',' ', text))
+
+
+
+
+
+
+

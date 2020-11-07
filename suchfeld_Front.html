@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finde deine Ausschreibung</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            padding: 10px;
+            margin:20px;
+            font-family:Verdana;
+            color: #27564f;
+            background-color: #8bcfcf;
+                }
+        h1 {
+            font-weight:normal;
+            color: #060b24;
+            }
+        #myForm{
+           padding-top: 20px;
+           margin-top:10px;
+            padding-bottom:40px;
+        }
+        #input{
+            font-family:Verdana;
+            color: #060b24;
+            background-color: #d9cbcb;
+        }
+        #submit{
+            color:  #d9cbcb;
+            background-color: #812f5b;
+
+        }
+        #textfeld {
+            padding-top: 20px;
+            margin-top:20px;
+            height:200px;
+            width:90%;
+            background-color: #d9cbcb;
+        }
+
+    </style>
+
+</head>
+<header>
+
+</header>
+<body>
+    <h1 id="welcome"> Willkommen zum Ausschreibungsfinder </h1>
+    <h4 id="desc">Finde die passenden Ausschreibungen für dein Unternehmen</h4>
+     <form method="POST" id="myForm" name="myForm" action="/action_page.php" onsubmit="run()" method="post">
+       Bitte Suchbegriff eingeben: <input id="input"type="text" name="fname">
+         <input id="submit"type="submit" value="los geht's!" onsubmit="run()">
+
+    </form>
+    <label for="textfeld">Die für deine Suche relevanten Ausschreibungen:</label>
+    <input id="textfeld"type="text" name="textfeld" size="100">
+</body>
+<footer>
+
+</footer>
+<script>
+    function run(){
+       var suchstring = document.getElementById("input").value;
+       $.ajax({
+           url: "http://localhost:8888/notebooks/Create%20corpus%20short_desc_eng.ipynb",
+           context: document.body
+            }).done(function() {
+             alert('finished python script');;
+            });
+    }
+</script>
+</html>
+

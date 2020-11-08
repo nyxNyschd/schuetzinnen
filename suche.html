@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MySearch</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <script language="JavaScript" type="text/javascript">  </script>
+</head>
+<style>
+        body {
+            padding: 10px;
+            margin:20px;
+            font-family:Verdana;
+            color: #27564f;
+            background-color: #8bcfcf;
+                }
+        h1 {
+            font-weight:normal;
+            color: #060b24;
+            }
+        #myForm{
+           padding-top: 20px;
+           margin-top:10px;
+            padding-bottom:40px;
+        }
+        #input{
+            font-family:Verdana;
+            color: #060b24;
+            background-color: #d9cbcb;
+        }
+        #submit{
+            color:  #d9cbcb;
+            background-color: #812f5b;
+
+        }
+        #label{
+            font-weight: bold;
+            padding: 20px;
+            text-align:center;
+        }
+
+        #results {
+            padding: 5px;
+            margin-top:20px;
+            height:auto;
+            width:90%;
+            text-align:center;
+            background-color: #d9cbcb;
+        }
+
+    </style>
+
+</head>
+<header>
+
+</header>
+<body>
+    <h1 id="welcome"> Willkommen zum Ausschreibungsfinder </h1>
+    <h4 id="desc">Finde die passenden Ausschreibungen für dein Unternehmen</h4>
+     <form method="POST" id="myForm" name="myForm">
+       Bitte Suchbegriff eingeben: <input id="input"type="text" name="input">
+         <input id="submit"type="submit" value="los geht's!">
+    </form>
+    <h4>Die für deine Suche relevanten Ausschreibungen:</h4>
+    <form method="GET" id="results" name="results">
+          <table id="table">
+            {% for result in results %}
+                <tr style="padding:5px; background-color: #d9cbcb; text-align:center;width:90%;">
+                    {{ result }}
+                </tr>
+
+            {% endfor %}
+          </table>
+    </form>
+</body>
+<footer>
+
+</footer>
+
+</html>

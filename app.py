@@ -1,23 +1,21 @@
 from flask import Flask, request, render_template
 
-import dumpAndRetrieve
+from backendKrams import datastuff
 
 app = Flask(__name__)
 
 
-@app.route('/')
-def searchBunny():
-    render_template('suchfeld_Front.html')
+@app.route('/', methods=['GET', 'POST'])
+def start():
+    if request.method == 'POST':
+        suchwort = request.form['input']
+        results = datastuff.all_values_containing_substring(suchwort)
+        return render_template('/suche.html', len=len(results), results=results)
 
+    else:
 
-@app.route('/', methods=['POST'])
-def searchBunny_post():
-
-    text = request.form['myForm']
-    return dumpAndRetrieve.probier_mal_das(text)
+        return render_template('/suche.html')
 
 
 if __name__ == '__main__':
     app.run()
-
-#$('#<form-id>').serialize()

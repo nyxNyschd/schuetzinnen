@@ -9,7 +9,8 @@ from collections import Counter
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
 
-short_desc_eng = pd.read_csv('/Users/larakiyicioglu/Documents/Semester3/Schuetzinnen/new_new_staging_xml_2020.csv', delimiter=',')
+short_desc_eng = pd.read_csv('/Users/larakiyicioglu/Documents/Semester3/Schuetzinnen/new_new_staging_xml_2020.csv',
+                             delimiter=',')
 shorty = pd.DataFrame(short_desc_eng)
 nlp = spacy.load("en_core_web_sm")
 
@@ -41,9 +42,7 @@ for text in cleaned:
     pd.DataFrame(corpus_tf)
     unic_words = set()
 for text in cleaned:
-    # text = text.split()
     unic_words = set(unic_words).union(set(text))
-print(unic_words)
 
 
 def compute_idf(word, cleaned):
@@ -53,7 +52,7 @@ def compute_idf(word, cleaned):
 word_idf = {};
 for word in unic_words:
     word_idf[word] = compute_idf(word, cleaned)
-# print(word_idf)
+
 pd.DataFrame([word_idf])
 index = {}
 for i, text_tf in enumerate(corpus_tf):
@@ -61,10 +60,10 @@ for i, text_tf in enumerate(corpus_tf):
         if word not in index:
             index[word] = {}
         index[word][i] = text_tf[word] * word_idf[word]
-print(index)
+
 query = 'competition'
 if query in index:
     for i in index[query].keys():
-        print(i, cleaned[i])
+        print(i, shorty['SHORT_DESC_ENG'][i])
 else:
     print("Es gibt kein Satz mit dem Wort " + query)

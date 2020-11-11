@@ -15,7 +15,7 @@ shorty = pd.DataFrame(short_desc_eng)
 nlp = spacy.load("en_core_web_sm")
 
 doc = nlp(shorty['SHORT_DESC_ENG'][0])
-for i in range(0, 99):
+for i in range(len(shorty)):
     text = shorty['SHORT_DESC_ENG'][i]
     lemma = [tok.lemma_ for tok in nlp(text)]
     no_punct = [tok for tok in lemma if re.match('\w+', tok)]

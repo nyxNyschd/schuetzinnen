@@ -28,45 +28,4 @@ for i in range(len(shorty)):
         if not lexeme.is_stop:
             filtered_sentence.append(word)
     cleaned.append(filtered_sentence)
-corpus_tf = []
-
-
-def compute_tf(text):
-    tf_text = Counter(text)
-    tf_text = {i: tf_text[i] / float(len(text)) for i in tf_text}
-    return tf_text
-
-
-for text in cleaned:
-    corpus_tf.append(compute_tf(text))
-    pd.DataFrame(corpus_tf)
-    unic_words = set()
-for text in cleaned:
-    unic_words = set(unic_words).union(set(text))
-
-
-def compute_idf(word, cleaned):
-    return math.log10(len(cleaned) / sum([1.0 for i in cleaned if word in i]))
-
-
-word_idf = {};
-for word in unic_words:
-    word_idf[word] = compute_idf(word, cleaned)
-
-pd.DataFrame([word_idf])
-index = {}
-for i, text_tf in enumerate(corpus_tf):
-    for word in text_tf.keys():
-        if word not in index:
-            index[word] = {}
-        index[word][i] = text_tf[word] * word_idf[word]
-for x, y in index.items():
-    print(x, y)
-
-
-query = 'county'
-if query in index:
-    for i in index[query].keys():
-        print(i, shorty['SHORT_DESC_ENG'][i])
-else:
-    print("Es gibt kein Satz mit dem Wort " + query)
+    print(i, filtered_sentence)

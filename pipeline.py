@@ -61,10 +61,9 @@ for i, text_tf in enumerate(corpus_tf):
             index[word] = {}
         index[word][i] = text_tf[word] * word_idf[word]
 
-
-query = 'word'
-    if query in index:
-        for i in index[query].keys():
-            print(i, shorty['SHORT_DESC_ENG'][i])
-    else:
-        print("Es gibt kein Satz mit dem Wort " + query)
+query = 'competition'
+if query in index:
+    for i in index[query].keys():
+        print(i, shorty['SHORT_DESC_ENG'][i])
+else:
+    print("Es gibt kein Satz mit dem Wort " + query)

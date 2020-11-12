@@ -46,6 +46,7 @@ for i in range(len(shorty)):
 
 corpus_tf = []
 
+
 def compute_tf(text):
     # text = text.split()
     tf_text = Counter(text)
@@ -78,8 +79,8 @@ for i, text_tf in enumerate(corpus_tf):
 
 for index, valuesList in tfidf.items():
     for values in valuesList.items():
-        sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]))
+        sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
         tfidf[index] = sort_orders.copy()
+
 for index, values in tfidf.items():
-    for i in range(len(values)):
-        print(i, values[i])
+    print(index, values)

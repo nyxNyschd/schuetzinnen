@@ -30,6 +30,7 @@ for i in range(len(shorty)):
 
 def all_values_containing_substring(substring):
     list = cleaned
+    #suchwort = substring.lemma_
     gotIt = []
     for i, s in enumerate(list):
         if substring in s:
@@ -39,4 +40,4 @@ def all_values_containing_substring(substring):
         print(gotIt[index])
 
 
-all_values_containing_substring("home")
+all_values_containing_substring("connection")

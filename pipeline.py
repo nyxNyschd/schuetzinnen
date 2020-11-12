@@ -54,6 +54,7 @@ for word in unic_words:
     word_idf[word] = compute_idf(word, cleaned)
 
 pd.DataFrame([word_idf])
+
 index = {}
 for i, text_tf in enumerate(corpus_tf):
     for word in text_tf.keys():
@@ -62,7 +63,6 @@ for i, text_tf in enumerate(corpus_tf):
         index[word][i] = text_tf[word] * word_idf[word]
 for x, y in index.items():
     print(x, y)
-
 
 query = 'county'
 if query in index:

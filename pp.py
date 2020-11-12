@@ -3,8 +3,6 @@ import pandas as pd
 import spacy
 from spacy.lang.en import English
 from spacy.tokenizer import Tokenizer
-import math
-from collections import Counter
 
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)

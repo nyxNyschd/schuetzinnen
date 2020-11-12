@@ -33,18 +33,14 @@
             background-color: #812f5b;
 
         }
-        #label{
-            font-weight: bold;
-            padding: 20px;
-            text-align:center;
-        }
+
 
         #results {
             padding: 5px;
             margin-top:20px;
             height:auto;
             width:90%;
-            text-align:center;
+            text-align:left;
             background-color: #d9cbcb;
         }
 
@@ -65,11 +61,13 @@
     <form method="GET" id="results" name="results">
           <table id="table">
             {% for result in results %}
-                <tr style="padding:5px; background-color: #d9cbcb; text-align:center;width:90%;">
+                <tr>
+                    <td>
                     {{ result }}
+                    </td>
                 </tr>
-
             {% endfor %}
+
           </table>
     </form>
 </body>

@@ -28,8 +28,23 @@ for i in range(len(shorty)):
             filtered_sentence.append(word)
     cleaned.append(filtered_sentence)
 
-corpus_tf = []
+# for index in range(len(cleaned)):
+#    print(cleaned[index])
 
+# def all_values_containing_substring(substring):
+#     list = cleaned
+#     #print(list)
+#     gotIt = []
+#     for i, s in enumerate(list):
+#         if substring in s:
+#               gotIt.append(shorty['SHORT_DESC_ENG'][i])
+#               gotIt.append("_____________________________________________________________________________")
+#     for index in range(len(gotIt)):
+#         print(gotIt[index])
+#
+# all_values_containing_substring("concern")
+
+corpus_tf = []
 
 def compute_tf(text):
     # text = text.split()
@@ -41,36 +56,30 @@ def compute_tf(text):
 for text in cleaned:
     corpus_tf.append(compute_tf(text))
 
-# for index in range(len(corpus_tf)):
-#     print(index, corpus_tf[index])
-pd.DataFrame(corpus_tf)
-
 unic_words = set()
 for text in cleaned:
-    # text = text.split()
     unic_words = set(unic_words).union(set(text))
-print(unic_words)
+
 
 def compute_idf(word, cleaned):
     return math.log10(len(cleaned) / sum([1.0 for i in cleaned if word in i]))
 
-word_idf = {};
+
+word_idf = {}
 for word in unic_words:
     word_idf[word] = compute_idf(word, cleaned)
-# print(word_idf)
-pd.DataFrame([word_idf])
 
-index = {}
+tfidf = {}
 for i, text_tf in enumerate(corpus_tf):
     for word in text_tf.keys():
-        if word not in index:
-            index[word] = {}
-        index[word][i] = text_tf[word]*word_idf[word]
-print(index)
+        if word not in tfidf:
+            tfidf[word] = {}
+        tfidf[word][i] = round(text_tf[word] * word_idf[word], 4)
 
-query = 'competition'
-if query in index:
-    for i in index[query].keys():
-        print(i, cleaned[i])
-else:
-    print("Es gibt kein Satz mit dem Wort " + query)
+for index, valuesList in tfidf.items():
+    for values in valuesList.items():
+        sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]))
+        tfidf[index] = sort_orders.copy()
+for index, values in tfidf.items():
+    for i in range(len(values)):
+        print(i, values[i])

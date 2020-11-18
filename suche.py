@@ -7,14 +7,14 @@ from spacy.tokenizer import Tokenizer
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
 
-short_desc_eng = pd.read_csv('/Users/larakiyicioglu/Documents/Semester3/Schuetzinnen/new_new_staging_xml_2020.csv',
+long_desc_eng = pd.read_csv('long_staging_xml_2020.csv',
                              delimiter=',')
-shorty = pd.DataFrame(short_desc_eng)
-nlp = spacy.load("en_core_web_sm")
+shorty = pd.DataFrame(long_desc_eng)
+nlp = spacy.load("en_core_web_lg")
 
 cleaned = []
 for i in range(len(shorty)):
-    text = shorty['SHORT_DESC_ENG'][i]
+    text = shorty['long_desc_eng'][i]
     lemma = [tok.lemma_ for tok in nlp(text)]
     no_punct = [tok for tok in lemma if re.match('\w+', tok)]
     no_zeichen = [tok for tok in no_punct if not re.match('\. \+ \* \( \) \[ \] \- \$ \|', tok)]
@@ -34,10 +34,10 @@ def all_values_containing_substring(substring):
     gotIt = []
     for i, s in enumerate(list):
         if substring in s:
-            gotIt.append(shorty['SHORT_DESC_ENG'][i])
+            gotIt.append(shorty['long_desc_eng'][i])
             gotIt.append("_____________________________________________________________________________")
     for index in range(len(gotIt)):
         print(gotIt[index])
 
 
-all_values_containing_substring("connection")
+all_values_containing_substring("work")

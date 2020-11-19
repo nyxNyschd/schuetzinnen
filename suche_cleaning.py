@@ -37,50 +37,38 @@ def substring_cleaning(substring):
         return no_whitespaces
 
 
+def fuzzy_logic(substring):
+    for i in range(len(cleaned)):
+        Ratios = process.extract(substring, cleaned[i])
+        for index in range(len(Ratios)):
+            if Ratios[index][1] > 70 and len(Ratios[index][0]) > 2:
+                highest = process.extractOne(substring, cleaned[i])
+                highest_one = highest[0]
+
+    print(highest_one)
+    return highest_one
+
+
 def all_values_containing_substring(substring):
-    cleaned_suchwort = substring_cleaning(substring)
+    fuzzy = fuzzy_logic(substring)
+    cleaned_suchwort = substring_cleaning(fuzzy)
     list = cleaned
     gotIt = []
     for i, s in enumerate(list):
         if cleaned_suchwort in s:
-            Ratios = process.extract(cleaned_suchwort, list[i])
-            print(Ratios)
             gotIt.append(shorty['long_desc_eng'][i])
             gotIt.append("_____________________________________________________________________________")
     for index in range(len(gotIt)):
         print(gotIt[index])
 
 
-# def all_values_containing_substring(substring):
-#     Ratios = process.extract(substring, list[i])
-#     print(Ratios)
-#     list = cleaned
-#     gotIt = []
-#     for i, s in enumerate(list):
-#         if cleaned_suchwort in s:
-#             gotIt.append(shorty['long_desc_eng'][i])
-#             gotIt.append("_____________________________________________________________________________")
-#     for index in range(len(gotIt)):
-#         print(gotIt[index])
-
-
-#all_values_containing_substring("measurs")
+all_values_containing_substring("concerns")
 
 
 # nächste entwicklungsschritte:
 # fehlererkennung fuzzy logic
 # akzente normalisieren mit tagging
 # textähnlichkeiten similarity modul
-
-def fuzzy_logic(substring):
-    for i in range(len(cleaned)):
-        #if
-            Ratios = process.extract(substring, cleaned[i])
-            print(Ratios)
-    return Ratios
-
-
-fuzzy_logic('meazure')
 
 # str2Match = "proceduer"
 # print(str2Match)

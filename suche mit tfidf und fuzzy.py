@@ -50,7 +50,7 @@ def fuzzy_logic(substring):
     print(highest_one)
     return highest_one
 
-def list_ranking(substring, list):
+def list_ranking(list):
     ranked_list = []
     corpus_tf = []
 
@@ -89,7 +89,7 @@ def list_ranking(substring, list):
 def all_values_containing_substring(substring):
     fuzzy = fuzzy_logic(substring)
     cleaned_suchwort = substring_cleaning(fuzzy)
-    ranked_dict = list_ranking(cleaned_suchwort, cleaned)
+    ranked_dict = list_ranking(cleaned)
     gotIt = []
     # for index, values in ranked_dict.items():
     #     print(index, values)

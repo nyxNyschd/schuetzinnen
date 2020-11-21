@@ -34,21 +34,21 @@ def substring_cleaning(substring):
         lemma = token.lemma_
         no_punct = lemma if re.match('\w+', substring) else lemma
         no_zeichen = no_punct if not re.match('[\,\+\*\(\)\|\[\]\?\!\/\=\{\}\#\&\;\:\_]', substring) else no_punct
-        no_whitespaces = no_zeichen if not re.match('\s+', substring) else no_zeichen
-        #print(no_whitespaces)
-        return no_whitespaces
+        cleaned_substring = no_zeichen if not re.match('\s+', substring) else no_zeichen
+        return cleaned_substring
 
 
 def fuzzy_logic(substring):
+    highest_value = 0
+    most_relevant_word = ' '
     for i in range(len(cleaned)):
         Ratios = process.extract(substring, cleaned[i])
         for index in range(len(Ratios)):
-            if Ratios[index][1] > 70 and len(Ratios[index][0]) > 2:
-                highest = process.extractOne(substring, cleaned[i])
-                highest_one = highest[0]
-
-    print(highest_one)
-    return highest_one
+            if highest_value < (Ratios[index][1]) and len(Ratios[index][0]) > 2:
+                temp = process.extractOne(substring, cleaned[i])
+                highest_value = temp[1]
+                most_relevant_word = temp[0]
+    return most_relevant_word
 
 def list_ranking(list):
     ranked_list = []
@@ -88,18 +88,18 @@ def list_ranking(list):
 
 def all_values_containing_substring(substring):
     fuzzy = fuzzy_logic(substring)
-    cleaned_suchwort = substring_cleaning(fuzzy)
+    cleaned_searched_word = substring_cleaning(fuzzy)
+    print("Das relevanteste Wort: " + cleaned_searched_word)
     ranked_dict = list_ranking(cleaned)
     gotIt = []
     # for index, values in ranked_dict.items():
     #     print(index, values)
     for s, list in ranked_dict.items():
         for j in range(len(list)):
-            if cleaned_suchwort == s: #es muss hier == sein, da wenn wir 'in' benutzen, verstehet es cleaned_suchwort als ein Teilwort von dem Wort, der in Text steht
+            if cleaned_searched_word in s:
                 gotIt.append(shorty['long_desc_eng'][list[j][0]])
                 gotIt.append("_____________________________________________________________________________")
     for index in range(len(gotIt)):
         print(gotIt[index])
 
-all_values_containing_substring("competition")
-
+all_values_containing_substring("limit")

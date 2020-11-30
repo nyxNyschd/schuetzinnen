@@ -20,8 +20,8 @@ Deployment
 
 Haben wir noch nicht 
 
-Zusätzliche Funktionalität
-==========================
+Funktionalität
+===============
 
 * Pipeline : 
   * Tokenisierung

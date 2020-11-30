@@ -23,7 +23,10 @@ Haben wir noch nicht
 Zusätzliche Funktionalität
 ==========================
 
-* Pipeline 
+* Pipeline : 
+- Tokenisierung
+- Lemmatisierung
+- Entfernung den Stoppwörtern, Satzzeichen, Leerzeichen
 * TF-IDF
 * fuzzi-logic
 

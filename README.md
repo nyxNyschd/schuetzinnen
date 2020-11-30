@@ -23,7 +23,7 @@ Haben wir noch nicht
 Zusätzliche Funktionalität
 ==========================
 
-* Pipline 
+* Pipeline 
 * TF-IDF
 * fuzzi-logic
 

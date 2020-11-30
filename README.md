@@ -20,8 +20,19 @@ Deployment
 
 Haben wir noch nicht 
 
-Funktionalität
-===============
+Backend 
+=======
+* Python 
+* Flask
+
+Frontend
+========
+* HTML 
+* CSS 
+* bootstrap
+
+Logik
+======
 
 * Pipeline : 
   * Tokenisierung

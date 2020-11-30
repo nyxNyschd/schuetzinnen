@@ -9,13 +9,13 @@ from collections import Counter
 
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
-short_desc_eng = pd.read_csv('C:/Users/buhal/OneDrive/Desktop/new_new_staging_xml_2020.csv', delimiter=',')
+long_desc_eng = pd.read_csv('C:/Users/buhal/Downloads/long_staging_xml_2020.csv', delimiter=',')
 
-shorty = pd.DataFrame(short_desc_eng)
+shorty = pd.DataFrame(long_desc_eng)
 nlp = spacy.load("en_core_web_sm")
 cleaned = []
 for i in range(len(shorty)):
-    text = shorty['SHORT_DESC_ENG'][i]
+    text = shorty['long_desc_eng'][i]
     lemma = [tok.lemma_ for tok in nlp(text)]
     no_punct = [tok for tok in lemma if re.match('\w+', tok)]
     no_zeichen = [tok for tok in no_punct if not re.match('\. \+ \* \( \) \[ \] \- \$ \|', tok)]
@@ -81,6 +81,9 @@ for index, valuesList in tfidf.items():
     for values in valuesList.items():
         sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
         tfidf[index] = sort_orders.copy()
+anzahl_vocab = 0
+for x, y in tfidf.items():
+    print(x,y)
+    anzahl_vocab+=1
+print(anzahl_vocab)
 
-for index, values in tfidf.items():
-    print(index, values)

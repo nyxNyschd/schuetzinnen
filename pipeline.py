@@ -12,7 +12,7 @@ tokenizer = Tokenizer(nlp.vocab)
 short_desc_eng = pd.read_csv('/Users/larakiyicioglu/Documents/Semester3/Schuetzinnen/new_new_staging_xml_2020.csv',
                              delimiter=',')
 shorty = pd.DataFrame(short_desc_eng)
-nlp = spacy.load("en_core_web_sm")
+nlp = spacy.load("en_core_web_lg")
 
 cleaned = []
 for i in range(len(shorty)):

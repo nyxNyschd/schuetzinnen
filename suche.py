@@ -26,6 +26,7 @@ for i in range(len(shorty)):
         if not lexeme.is_stop:
             filtered_sentence.append(word1)
     cleaned.append(filtered_sentence)
+    print(filtered_sentence)
 
 
 def all_values_containing_substring(substring):
@@ -40,4 +41,4 @@ def all_values_containing_substring(substring):
         print(gotIt[index])
 
 
-all_values_containing_substring("work")
+all_values_containing_substring("cultural")

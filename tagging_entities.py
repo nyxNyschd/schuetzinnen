@@ -13,9 +13,9 @@ nlp = spacy.load("en_core_web_lg")
 
 for i in range(len(shorty)):
     text = shorty['long_desc_eng'][i]
-    df = pd.DataFrame([[tok.text, tok.lemma_, tok.pos_, tok.tag_, tok.dep_, tok.shape_, tok.is_alpha, tok.is_stop]
+    df = pd.DataFrame([[tok.text, tok.lemma_, tok.pos_, tok.tag_, tok.dep_, tok.shape_, tok.is_alpha, tok.is_stop, tok.norm_]
                        for tok in nlp(text)])
-    df.columns = ['text', 'lemma', 'pos', 'tag', 'dep', 'shape', 'is_alpha', 'is_stop']
+    df.columns = ['text', 'lemma', 'pos', 'tag', 'dep', 'shape', 'is_alpha', 'is_stop', 'norm']
     print(text)
     print(df)
 

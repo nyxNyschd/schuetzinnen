@@ -37,7 +37,6 @@ def substring_cleaning(substring):
         no_punct = lemma if re.match('\w+', substring) else lemma
         no_zeichen = no_punct if not re.match('[\,\+\*\(\)\|\[\]\?\!\/\=\{\}\#\&\;\:\_]', substring) else no_punct
         cleaned_substring = no_zeichen if not re.match('\s+', substring) else no_zeichen
-        print(cleaned_substring)
         return cleaned_substring
 
 
@@ -96,7 +95,6 @@ def all_values_containing_substring(substring):
     cleaned_searched_word = substring_cleaning(fuzzy)
     print("Das relevanteste Wort: " + cleaned_searched_word)
     ranked_dict = list_ranking(cleaned)
-
     gotIt = []
     # for index, values in ranked_dict.items():
     #     print(index, values)
@@ -107,6 +105,7 @@ def all_values_containing_substring(substring):
                 gotIt.append("_____________________________________________________________________________")
     for index in range(len(gotIt)):
         print(gotIt[index])
+        return gotIt
 
 
-all_values_containing_substring("competition")
+#all_values_containing_substring("limit")

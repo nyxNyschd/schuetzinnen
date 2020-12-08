@@ -8,7 +8,7 @@ app = Flask(__name__)
 def start():
     if request.method == 'POST':
         suchwort = request.form['input']
-        results = suchfunktion.all_values_containing_substring(suchwort)
+        results = suchfunktion.suche_substring(suchwort)
         return render_template('suche.html', len=len(results), results=results)
 
     else:

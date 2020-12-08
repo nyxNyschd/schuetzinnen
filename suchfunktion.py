@@ -74,9 +74,17 @@ def list_ranking(list):
     #             ranked_list.append(list[tfidf[substring][j][0]])
     return tfidf
 
+def suche_substring(substring):
+    result = all_values_containing_substring(substring)
+    if len(result) == 0:
+        print("fuzzy")
+        fuzzy = fuzzy_logic(substring, cleaned)
+        result = all_values_containing_substring(fuzzy)
+    for index in range(len(result)):
+        print(result[index])
+
 def all_values_containing_substring(substring):
-    fuzzy = fuzzy_logic(substring, cleaned)
-    cleaned_searched_word = substring_cleaning(fuzzy)
+    cleaned_searched_word = substring_cleaning(substring)
     print("Das relevanteste Wort: " + cleaned_searched_word)
     ranked_dict = list_ranking(cleaned)
     gotIt = []
@@ -87,7 +95,7 @@ def all_values_containing_substring(substring):
             if cleaned_searched_word in s:
                 gotIt.append(shorty['long_desc_eng'][list[j][0]])
                 gotIt.append("_____________________________________________________________________________")
-    for index in range(len(gotIt)):
-        print(gotIt[index])
+    return gotIt
 
-all_values_containing_substring("work")
+
+all_values_containing_substring("hjkgjgkjhgkjgkgj")

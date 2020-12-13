@@ -10,7 +10,8 @@ from collections import Counter
 
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
-long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',')
+long_desc_eng = pd.read_csv('../500_staging_xml_2020.csv', delimiter=',') #'<------- Backend
+#long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',') #<------- Frontend
 long = pd.DataFrame(long_desc_eng)
 nlp = spacy.load("en_core_web_lg")
 cleaned=[]
@@ -69,14 +70,28 @@ def list_ranking():
 
     return tfidf
 
-if __name__ == 'utils':
+#wenn ihr mit Frontend arbeiten möchtet:
+# if __name__ == 'utils':
+#     docs = clean_corpus()
+#     outfile1 = open('Backend/tokens', 'wb')
+#     pickle.dump(docs, outfile1)
+#     outfile1.close()
+#
+#     ranked_list = list_ranking()
+#     filename = 'Backend/lookup_table'
+#     outfile2 = open(filename, 'wb')
+#     pickle.dump(ranked_list, outfile2)
+#     outfile2.close()
+
+#wenn ihr mit Backend arbeiten möchtet:
+if __name__ == '__main__':
     docs = clean_corpus()
-    outfile1 = open('Backend/tokens', 'wb')
+    outfile1 = open('tokens', 'wb')
     pickle.dump(docs, outfile1)
     outfile1.close()
 
     ranked_list = list_ranking()
-    filename = 'Backend/lookup_table'
+    filename = 'lookup_table'
     outfile2 = open(filename, 'wb')
     pickle.dump(ranked_list, outfile2)
     outfile2.close()

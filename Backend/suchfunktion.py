@@ -18,9 +18,7 @@ def substring_cleaning(substring):
         return cleaned_substring
 
 def fuzzy_logic(substring):
-
     highest_value = 0
-    print(__name__)
     most_relevant_word = ' '
     for i in range(len(CLEANED)):
         Ratios = process.extract(substring, CLEANED[i])
@@ -35,31 +33,38 @@ def main_search(query):
     cleaned_query = substring_cleaning(query)
     fuzzy = fuzzy_logic(cleaned_query)
     gotIt = []
+    print("RESULT OF YOUR SEARCH: " + cleaned_query)
     for key, values in LOOKUP_TABLE.items():
         for index in range(len(values)):
             if cleaned_query in key:
                 gotIt.append(long['long_desc_eng'][values[index][0]])
-                #gotIt.append("..........................")
+                gotIt.append("..........................")
     if len(gotIt) == 0:
-        #print("OOPS. WORD NOT FOUND: MAYBE YOU MEANT: " + fuzzy)
+        print("OOPS. WORD NOT FOUND: MAYBE YOU MEANT: " + fuzzy)
         for key, values in LOOKUP_TABLE.items():
             for index in range(len(values)):
                 if fuzzy in key:
                     gotIt.append(long['long_desc_eng'][values[index][0]])
-                    #gotIt.append("..........................")
-    # for i in range(len(gotIt)):
-    #     print(str(i) + " " + gotIt[i])
-    return gotIt[:9]
+                    gotIt.append("..........................")
+    for i in range(len(gotIt)):
+        print(str(i) + " " + gotIt[i])
+    return gotIt
 
-if __name__ == 'Backend.suchfunktion':
-    infile1 = open('Backend/tokens', 'rb')
+#wenn ihr mit Frontend arbeiten möchtet:
+# if __name__ == 'Backend.suchfunktion':
+#     infile1 = open('Backend/tokens', 'rb')
+#     CLEANED = pickle.load(infile1)
+#     infile1.close()
+#     infile2 = open('Backend/lookup_table', 'rb')
+#     LOOKUP_TABLE = pickle.load(infile2)
+#     infile2.close()
+
+#wenn ihr mit Backend arbeiten möchtet:
+if __name__ == '__main__':
+    infile1 = open('tokens', 'rb')
     CLEANED = pickle.load(infile1)
     infile1.close()
-    infile2 = open('Backend/lookup_table', 'rb')
+    infile2 = open('lookup_table', 'rb')
     LOOKUP_TABLE = pickle.load(infile2)
     infile2.close()
-
-
-
-
-
+    main_search('work')

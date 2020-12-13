@@ -7,6 +7,7 @@ from utils import long
 nlp = English()
 nlp = spacy.load("en_core_web_lg")
 
+
 def substring_cleaning(substring):
     doc1 = nlp(substring)
     for token in doc1:
@@ -17,7 +18,9 @@ def substring_cleaning(substring):
         return cleaned_substring
 
 def fuzzy_logic(substring):
+
     highest_value = 0
+    print(__name__)
     most_relevant_word = ' '
     for i in range(len(CLEANED)):
         Ratios = process.extract(substring, CLEANED[i])
@@ -28,51 +31,35 @@ def fuzzy_logic(substring):
                 most_relevant_word = temp[0]
     return most_relevant_word
 
-def all_values_containing_substring(query):
+def main_search(query):
     cleaned_query = substring_cleaning(query)
     fuzzy = fuzzy_logic(cleaned_query)
     gotIt = []
-    print("RESULT FOR YOUR SEARCH: " + cleaned_query)
     for key, values in LOOKUP_TABLE.items():
-        for j in range(len(values)):
+        for index in range(len(values)):
             if cleaned_query in key:
-                gotIt.append(long['long_desc_eng'][values[j][0]])
+                gotIt.append(long['long_desc_eng'][values[index][0]])
                 #gotIt.append("..........................")
     if len(gotIt) == 0:
-        print("OOPS. WORD NOT FOUND: MAYBE YOU MEANT: " + fuzzy)
+        #print("OOPS. WORD NOT FOUND: MAYBE YOU MEANT: " + fuzzy)
         for key, values in LOOKUP_TABLE.items():
-            for j in range(len(values)):
+            for index in range(len(values)):
                 if fuzzy in key:
-                    gotIt.append(long['long_desc_eng'][values[j][0]])
+                    gotIt.append(long['long_desc_eng'][values[index][0]])
                     #gotIt.append("..........................")
-    for i in range(len(gotIt)):
-        print(str(i) + " " + gotIt[i])
+    # for i in range(len(gotIt)):
+    #     print(str(i) + " " + gotIt[i])
     return gotIt[:9]
 
-
-# def values_containing_substring(substring):
-#     fuzzy = fuzzy_logic(substring)
-#     cleaned_searched_word = substring_cleaning(fuzzy)
-#     print("Das relevanteste Wort: " + cleaned_searched_word)
-#     ranked_dict = list_ranking(cleaned)
-#     gotIt = []
-#     # for index, values in ranked_dict.items():
-#     #     print(index, values)
-#     for s, list in ranked_dict.items():
-#         for j in range(len(list)):
-#             if cleaned_searched_word in s:
-#                 gotIt.append(shorty['long_desc_eng'][list[j][0]])
-#                 gotIt.append("......................................................................................")
-#     for index in range(len(gotIt)):
-#         return gotIt[9:]
-
-if __name__ == '__main__':
-    infile1 = open('tokens', 'rb')
+if __name__ == 'Backend.suchfunktion':
+    infile1 = open('Backend/tokens', 'rb')
     CLEANED = pickle.load(infile1)
     infile1.close()
-    infile2 = open('lookup_table', 'rb')
+    infile2 = open('Backend/lookup_table', 'rb')
     LOOKUP_TABLE = pickle.load(infile2)
     infile2.close()
-    all_values_containing_substring("compatition")
+
+
+
 
 

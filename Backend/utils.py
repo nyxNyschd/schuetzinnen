@@ -1,4 +1,5 @@
 import re
+import os
 import pandas as pd
 import spacy
 from spacy.lang.en import English
@@ -9,13 +10,12 @@ from collections import Counter
 
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
-long_desc_eng = pd.read_csv('../500_staging_xml_2020.csv', delimiter=',')
+long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',')
 long = pd.DataFrame(long_desc_eng)
 nlp = spacy.load("en_core_web_lg")
-
-cleaned = []
-
+cleaned=[]
 def clean_corpus():
+
     for i in range(len(long)):
         text = long['long_desc_eng'][i]
         lemma = [tok.lemma_ for tok in nlp(text)]
@@ -65,16 +65,18 @@ def list_ranking():
         for values in valuesList.items():
             sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
             tfidf[index] = sort_orders.copy()
-
+    #print(tfidf)
 
     return tfidf
 
-if __name__ == '__main__':
+if __name__ == 'utils':
     docs = clean_corpus()
-    outfile1 = open('tokens', 'wb')
+    outfile1 = open('Backend/tokens', 'wb')
     pickle.dump(docs, outfile1)
+    outfile1.close()
 
     ranked_list = list_ranking()
-    filename = 'lookup_table'
+    filename = 'Backend/lookup_table'
     outfile2 = open(filename, 'wb')
     pickle.dump(ranked_list, outfile2)
+    outfile2.close()

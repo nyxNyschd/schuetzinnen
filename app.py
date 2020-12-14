@@ -2,7 +2,7 @@ from flask import Flask, request, render_template
 import pandas as pd
 import spacy
 from spacy.lang.en import English
-from backendKrams import suchfunktion
+from backend import suchfunktion
 
 app = Flask(__name__)
 

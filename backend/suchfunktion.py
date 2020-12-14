@@ -7,7 +7,7 @@ from spacy.tokenizer import Tokenizer
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
 
-short_desc_eng = pd.read_csv('cpv_short_desc_eng.csv', delimiter=',')
+short_desc_eng = pd.read_csv('../cpv_short_desc_eng.csv', delimiter=',')
 shorty = pd.DataFrame(short_desc_eng)
 nlp = spacy.load("en_core_web_sm")
 

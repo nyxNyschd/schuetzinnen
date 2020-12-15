@@ -10,8 +10,8 @@ from collections import Counter
 
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
-long_desc_eng = pd.read_csv('../500_staging_xml_2020.csv', delimiter=',') #'<------- Backend
-#long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',') #<------- Frontend
+#long_desc_eng = pd.read_csv('../500_staging_xml_2020.csv', delimiter=',') #<------- Backend
+long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',') #<------- Frontend
 long = pd.DataFrame(long_desc_eng)
 nlp = spacy.load("en_core_web_lg")
 cleaned=[]
@@ -61,37 +61,32 @@ def list_ranking():
             if word not in tfidf:
                 tfidf[word] = {}
             tfidf[word][i] = round(j[word] * idf[word], 4)
-
-    for index, valuesList in tfidf.items():
-        for values in valuesList.items():
-            sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
-            tfidf[index] = sort_orders.copy()
     #print(tfidf)
 
     return tfidf
 
 #wenn ihr mit Frontend arbeiten möchtet:
-# if __name__ == 'utils':
-#     docs = clean_corpus()
-#     outfile1 = open('Backend/tokens', 'wb')
-#     pickle.dump(docs, outfile1)
-#     outfile1.close()
-#
-#     ranked_list = list_ranking()
-#     filename = 'Backend/lookup_table'
-#     outfile2 = open(filename, 'wb')
-#     pickle.dump(ranked_list, outfile2)
-#     outfile2.close()
-
-#wenn ihr mit Backend arbeiten möchtet:
-if __name__ == '__main__':
+if __name__ == 'utils':
     docs = clean_corpus()
-    outfile1 = open('tokens', 'wb')
+    outfile1 = open('Backend/tokens', 'wb')
     pickle.dump(docs, outfile1)
     outfile1.close()
 
     ranked_list = list_ranking()
-    filename = 'lookup_table'
+    filename = 'Backend/lookup_table'
     outfile2 = open(filename, 'wb')
     pickle.dump(ranked_list, outfile2)
     outfile2.close()
+
+#wenn ihr mit Backend arbeiten möchtet:
+# if __name__ == '__main__':
+#     docs = clean_corpus()
+#     outfile1 = open('tokens', 'wb')
+#     pickle.dump(docs, outfile1)
+#     outfile1.close()
+#
+#     ranked_list = list_ranking()
+#     filename = 'lookup_table'
+#     outfile2 = open(filename, 'wb')
+#     pickle.dump(ranked_list, outfile2)
+#     outfile2.close()

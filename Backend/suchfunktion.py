@@ -9,13 +9,17 @@ nlp = spacy.load("en_core_web_lg")
 
 
 def substring_cleaning(substring):
-    doc1 = nlp(substring)
-    for token in doc1:
-        lemma = token.lemma_
-        no_punct = lemma if re.match('\w+', substring) else lemma
-        no_zeichen = no_punct if not re.match('[\,\+\*\(\)\|\[\]\?\!\/\=\{\}\#\&\;\:\_]', substring) else no_punct
-        cleaned_substring = no_zeichen if not re.match('\s+', substring) else no_zeichen
-        return cleaned_substring
+    cleaned_query = []
+    lemma = [tok.lemma_ for tok in nlp(substring)]
+    no_punct = [tok for tok in lemma if re.match('\w+', tok)]
+    no_zeichen = [tok for tok in no_punct if not re.match('\. \+ \* \( \) \[ \] \- \$ \|', tok)]
+    no_numbers = [tok for tok in no_zeichen if not re.match('\d+', tok)]
+    no_whitespaces = [tok for tok in no_numbers if not re.match('\s+', tok)]
+    for word in no_whitespaces:
+        lexeme = nlp.vocab[word]
+        if not lexeme.is_stop:
+            cleaned_query.append(word)
+    return cleaned_query
 
 def fuzzy_logic(substring):
     highest_value = 0
@@ -29,42 +33,50 @@ def fuzzy_logic(substring):
                 most_relevant_word = temp[0]
     return most_relevant_word
 
+def merge_dict_summ(dict1, dict2):
+    # print({k: index[query[0]].get(k, 0) + index[query[1]].get(k, 0) for k in set(index[query[0]]) | set(index[query[1]])}
+    return {k: dict1.get(k, 0) + dict2.get(k, 0) for k in set(dict1) | set(dict2)}
+
 def main_search(query):
     cleaned_query = substring_cleaning(query)
-    fuzzy = fuzzy_logic(cleaned_query)
+    print(cleaned_query)
+    result = {}
     gotIt = []
-    print("RESULT OF YOUR SEARCH: " + cleaned_query)
-    for key, values in LOOKUP_TABLE.items():
-        for index in range(len(values)):
-            if cleaned_query in key:
-                gotIt.append(long['long_desc_eng'][values[index][0]])
-                gotIt.append("..........................")
-    if len(gotIt) == 0:
-        print("OOPS. WORD NOT FOUND: MAYBE YOU MEANT: " + fuzzy)
-        for key, values in LOOKUP_TABLE.items():
-            for index in range(len(values)):
-                if fuzzy in key:
-                    gotIt.append(long['long_desc_eng'][values[index][0]])
-                    gotIt.append("..........................")
+
+    for word in cleaned_query:
+        if word in LOOKUP_TABLE.keys():
+            #print(word, LOOKUP_TABLE[word])
+            # for i in LOOKUP_TABLE[word].keys():
+            #     print(i, long['long_desc_eng'][i])
+            result = merge_dict_summ(result, LOOKUP_TABLE[word])
+        else:
+            fuzzy = fuzzy_logic(word)
+            print(fuzzy)
+            result = merge_dict_summ(result, LOOKUP_TABLE[fuzzy])
+    result = sorted(result, key=result.get, reverse=True)
+    print(result)
+    for i in result:
+        gotIt.append(long['long_desc_eng'][i])
     for i in range(len(gotIt)):
-        print(str(i) + " " + gotIt[i])
+        print(gotIt[i])
     return gotIt
-
 #wenn ihr mit Frontend arbeiten möchtet:
-# if __name__ == 'Backend.suchfunktion':
-#     infile1 = open('Backend/tokens', 'rb')
-#     CLEANED = pickle.load(infile1)
-#     infile1.close()
-#     infile2 = open('Backend/lookup_table', 'rb')
-#     LOOKUP_TABLE = pickle.load(infile2)
-#     infile2.close()
-
-#wenn ihr mit Backend arbeiten möchtet:
-if __name__ == '__main__':
-    infile1 = open('tokens', 'rb')
+if __name__ == 'Backend.suchfunktion':
+    infile1 = open('Backend/tokens', 'rb')
     CLEANED = pickle.load(infile1)
     infile1.close()
-    infile2 = open('lookup_table', 'rb')
+    infile2 = open('Backend/lookup_table', 'rb')
     LOOKUP_TABLE = pickle.load(infile2)
     infile2.close()
-    main_search('work')
+
+
+
+#wenn ihr mit Backend arbeiten möchtet:
+# if __name__ == '__main__':
+#     infile1 = open('tokens', 'rb')
+#     CLEANED = pickle.load(infile1)
+#     infile1.close()
+#     infile2 = open('lookup_table', 'rb')
+#     LOOKUP_TABLE = pickle.load(infile2)
+#     infile2.close()
+#     main_search('permanent daily')

@@ -9,7 +9,7 @@ from collections import Counter
 
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
-long_desc_eng = pd.read_csv('C:/Users/buhal/Downloads/long_staging_xml_2020.csv', delimiter=',')
+long_desc_eng = pd.read_csv('../500_staging_xml_2020.csv', delimiter=',')
 
 shorty = pd.DataFrame(long_desc_eng)
 nlp = spacy.load("en_core_web_lg")
@@ -77,13 +77,11 @@ for i, text_tf in enumerate(corpus_tf):
             tfidf[word] = {}
         tfidf[word][i] = round(text_tf[word] * word_idf[word], 4)
 
-for index, valuesList in tfidf.items():
-    for values in valuesList.items():
-        sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
-        tfidf[index] = sort_orders.copy()
-anzahl_vocab = 0
+# for index, valuesList in tfidf.items():
+#     for values in valuesList.items():
+#         sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
+#         tfidf[index] = sort_orders.copy()
+# anzahl_vocab = 0
 for x, y in tfidf.items():
     print(x,y)
-    anzahl_vocab+=1
-print(anzahl_vocab)
 

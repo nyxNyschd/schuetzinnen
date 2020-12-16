@@ -67,14 +67,15 @@ def list_ranking():
                 tfidf[word] = {}
             tfidf[word][i] = round(j[word] * idf[word], 4)
 
-    for index, valuesList in tfidf.items():
-        for values in valuesList.items():
-            sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
-            tfidf[index] = sort_orders.copy()
+    # for index, valuesList in tfidf.items():
+    #     for values in valuesList.items():
+    #         sort_orders = sorted(valuesList.items(), key=lambda kv: (kv[1], kv[0]), reverse=True)
+    #         tfidf[index] = sort_orders.copy()
 
     return tfidf
 
 
+# Main fürs Frontend
 if __name__ == 'utils':
     docs = clean_corpus()
     outfile1 = open('backend/tokens', 'wb')
@@ -87,6 +88,7 @@ if __name__ == 'utils':
     pickle.dump(ranked_list, outfile2)
     outfile2.close()
 
+# Main fürs Backend
 # if __name__ == '__main__':
 #     docs = clean_corpus()
 #     outfile1 = open('tokens', 'wb')

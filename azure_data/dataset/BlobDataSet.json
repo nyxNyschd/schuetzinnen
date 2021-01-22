@@ -10,10 +10,7 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": {
-					"value": "@CONCAT(pipeline().RunId, '.txt')",
-					"type": "Expression"
-				},
+				"fileName": "data.cpv",
 				"folderPath": "fromDbToBlob",
 				"container": "htwdata"
 			},

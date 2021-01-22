@@ -1,0 +1,316 @@
+{
+	"name": "AzureSqlTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureSqlDatabase1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "AzureSqlTable",
+		"schema": [
+			{
+				"name": "RECEPTION_ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DOC_ID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DELETION_DATE",
+				"type": "date"
+			},
+			{
+				"name": "ESTIMATED_TOTAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ESTIMATED_TOTAL_CUR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PROCUREMENT_TOTAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PROCUREMENT_TOTAL_CUR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "FORM",
+				"type": "nvarchar"
+			},
+			{
+				"name": "COLL_OJ",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NO_OJ",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "DATE_PUB",
+				"type": "date"
+			},
+			{
+				"name": "NO_DOC_OJS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "URI_DOC",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LG_ORIG",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ISO_COUNTRY",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IA_URL_GENERAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "IA_URL_ETENDERING",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ORIGINAL_CPV_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ORIGINAL_CPV",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "ORIGINAL_NUTS_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ORIGINAL_NUTS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CA_CE_NUTS_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CA_CE_NUTS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "REF_NO_DOC_OJS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "DS_DATE_DISPATCH",
+				"type": "date"
+			},
+			{
+				"name": "DT_DATE_FOR_SUBMISSION",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AA_AUTHORITY_TYPE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AA_AUTHORITY_TYPE_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TD_DOCUMENT_TYPE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TD_DOCUMENT_TYPE_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NC_CONTRACT_NATURE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NC_CONTRACT_NATURE_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PR_PROC",
+				"type": "nvarchar"
+			},
+			{
+				"name": "PR_PROC_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RP_REGULATION",
+				"type": "nvarchar"
+			},
+			{
+				"name": "RP_REGULATION_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TY_TYPE_BID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TY_TYPE_BID_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AC_AWARD_CRIT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AC_AWARD_CRIT_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MA_MAIN_ACTIVITIES",
+				"type": "nvarchar"
+			},
+			{
+				"name": "MA_MAIN_ACTIVITIES_Text",
+				"type": "nvarchar"
+			},
+			{
+				"name": "HEADING",
+				"type": "nvarchar"
+			},
+			{
+				"name": "INITIATOR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AA_NAME_EN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "AA_NAME_ORIG",
+				"type": "nvarchar"
+			},
+			{
+				"name": "LEGAL_BASIS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "NOTICE_UUID",
+				"type": "nvarchar"
+			},
+			{
+				"name": "OFFICIALNAME",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ADDRESS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TOWN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "POSTCODE",
+				"type": "nvarchar"
+			},
+			{
+				"name": "TITLE",
+				"type": "text"
+			},
+			{
+				"name": "SHORT_DESC_ENG",
+				"type": "text"
+			},
+			{
+				"name": "SHORT_DESC_ORIGINAL",
+				"type": "text"
+			},
+			{
+				"name": "LONG_DESC_ENG",
+				"type": "text"
+			},
+			{
+				"name": "LONG_DESC_ORIGINAL",
+				"type": "text"
+			},
+			{
+				"name": "CONTRACTOR_OFFICIALNAME_EN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_OFFICIALNAME_ORIG",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_ADRESS_EN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_ADRESS_ORIG",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_TOWN_EN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_TOWN_ORIG",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_PCODE_EN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_PCODE_ORIG",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_COUNTRY_EN",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CONTRACTOR_COUNTRY_ORIG",
+				"type": "nvarchar"
+			},
+			{
+				"name": "CRIT",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAL_ESTIMATED_TOTAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAL_ESTIMATED_TOTAL_CUR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAL_TOTAL",
+				"type": "nvarchar"
+			},
+			{
+				"name": "VAL_TOTAL_CUR",
+				"type": "nvarchar"
+			},
+			{
+				"name": "ANZAHL_LOTS",
+				"type": "nvarchar"
+			},
+			{
+				"name": "namespace",
+				"type": "nvarchar"
+			}
+		],
+		"typeProperties": {
+			"schema": "TENDERLYZE",
+			"table": "staging_xml_2020"
+		}
+	},
+	"type": "Microsoft.DataFactory/factories/datasets"
+}

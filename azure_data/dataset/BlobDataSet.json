@@ -10,7 +10,6 @@
 		"typeProperties": {
 			"location": {
 				"type": "AzureBlobStorageLocation",
-				"fileName": "data.cpv",
 				"folderPath": "fromDbToBlob",
 				"container": "htwdata"
 			},

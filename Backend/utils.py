@@ -10,25 +10,35 @@ from collections import Counter
 
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
-#long_desc_eng = pd.read_csv('../500_staging_xml_2020.csv', delimiter=',') #<------- Backend
-long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',') #<------- Frontend
-long = pd.DataFrame(long_desc_eng)
+data_table = pd.read_csv('../13_Spalten.csv', delimiter=',') #<------- Backend
+#long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',') #<------- Frontend
+data_df = pd.DataFrame(data_table)
+data_df = data_df.applymap(str)
+data_df["full_data"] = data_df["TITLE"] + " " + data_df["SHORT_DESC_ENG"] + " " + data_df["LONG_DESC_ENG"]+ " " \
+                       + data_df["MA_MAIN_ACTIVITIES"] + " " + data_df["NC_CONTRACT_NATURE_Text"] + " " \
+                       + data_df["ORIGINAL_CPV"] + " " + data_df["ORIGINAL_CPV_Text"] + " "+ data_df["PROCUREMENT_TOTAL"] \
+                       + " "+ data_df["PROCUREMENT_TOTAL_CUR"]+ " "+ data_df["VAL_ESTIMATED_TOTAL"] + " " \
+                       + data_df["VAL_ESTIMATED_TOTAL_CUR"] + " " + data_df["VAL_TOTAL"] + " "\
+                       + data_df["VAL_TOTAL_CUR"]
 nlp = spacy.load("en_core_web_lg")
+# for i in range(len(data_df)):
+#     print(data_df["full_data"][i])
+#print(data_df)
 cleaned=[]
-def clean_corpus():
 
-    for i in range(len(long)):
-        text = long['long_desc_eng'][i]
-        lemma = [tok.lemma_ for tok in nlp(text)]
-        no_punct = [tok for tok in lemma if re.match('\w+', tok)]
-        no_zeichen = [tok for tok in no_punct if not re.match('\. \+ \* \( \) \[ \] \- \$ \|', tok)]
-        no_whitespaces = [tok for tok in no_zeichen if not re.match('\s+', tok)]
-        filtered_sentence = []
-        for word in no_whitespaces:
-            lexeme = nlp.vocab[word]
-            if not lexeme.is_stop:
-                filtered_sentence.append(word)
-        cleaned.append(filtered_sentence)
+def clean_corpus():
+    for i in range(len(data_df)):
+            text = data_df["full_data"][i]
+            lemma = [tok.lemma_ for tok in nlp(text)]
+            no_punct = [tok for tok in lemma if re.match('\w+', tok)]
+            no_zeichen = [tok for tok in no_punct if not re.match('\. \+ \* \( \) \[ \] \- \$ \|', tok)]
+            no_whitespaces = [tok for tok in no_zeichen if not re.match('\s+', tok)]
+            filtered_sentence = []
+            for word in no_whitespaces:
+                lexeme = nlp.vocab[word]
+                if not lexeme.is_stop:
+                    filtered_sentence.append(word)
+            cleaned.append(filtered_sentence)
     return cleaned
 
 def tf_compute(cleaned):
@@ -62,31 +72,30 @@ def list_ranking():
                 tfidf[word] = {}
             tfidf[word][i] = round(j[word] * idf[word], 4)
     #print(tfidf)
-
     return tfidf
 
 #wenn ihr mit Frontend arbeiten möchtet:
-if __name__ == 'utils':
-    docs = clean_corpus()
-    outfile1 = open('Backend/tokens', 'wb')
-    pickle.dump(docs, outfile1)
-    outfile1.close()
-
-    ranked_list = list_ranking()
-    filename = 'Backend/lookup_table'
-    outfile2 = open(filename, 'wb')
-    pickle.dump(ranked_list, outfile2)
-    outfile2.close()
-
-#wenn ihr mit Backend arbeiten möchtet:
-# if __name__ == '__main__':
+# if __name__ == 'utils':
 #     docs = clean_corpus()
-#     outfile1 = open('tokens', 'wb')
+#     outfile1 = open('Backend/tokens', 'wb')
 #     pickle.dump(docs, outfile1)
 #     outfile1.close()
 #
 #     ranked_list = list_ranking()
-#     filename = 'lookup_table'
+#     filename = 'Backend/lookup_table'
 #     outfile2 = open(filename, 'wb')
 #     pickle.dump(ranked_list, outfile2)
 #     outfile2.close()
+
+#wenn ihr mit Backend arbeiten möchtet:
+if __name__ == '__main__':
+    docs = clean_corpus()
+    outfile1 = open('tokens', 'wb')
+    pickle.dump(docs, outfile1)
+    outfile1.close()
+
+    ranked_list = list_ranking()
+    filename = 'lookup_table'
+    outfile2 = open(filename, 'wb')
+    pickle.dump(ranked_list, outfile2)
+    outfile2.close()

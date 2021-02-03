@@ -21,17 +21,18 @@
 
 <div id="textfeld">
 <h4>Die für deine Suche relevanten Ausschreibungen:</h4> 
-    <form method="GET" id="results" name="results"> 
-        <table id="table">
-            {% for result in results %}
-                <tr>
-                    <td>
-                    {{ result }}
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-    </form>
+<ol class="result">
+    {% for result in results %}
+        <li>{{ result }}</li>
+    {% endfor %}
+</ol>
+
+<h4>Ähnliche Ausschreibungen:</h4> 
+<ol class="result">
+    {% for result in similar_results %}
+        <li>{{ result }}</li>
+    {% endfor %}
+</ol>
 <!--<button id="showmores" onclick="showMore()" type="submit">Mehr anzeigen</button>
     <form method="POST" id="showmores" name="showmores">
         <table id="table">

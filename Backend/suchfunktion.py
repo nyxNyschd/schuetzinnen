@@ -3,7 +3,7 @@ import re
 import spacy
 from fuzzywuzzy import process
 from spacy.lang.en import English
-from utils import long
+from Backend.utils import long
 nlp = English()
 nlp = spacy.load("en_core_web_lg")
 
@@ -60,6 +60,20 @@ def main_search(query):
     for i in range(len(gotIt)):
         print(gotIt[i])
     return gotIt
+
+def similar_search(query):
+    cleaned_query = substring_cleaning(query)
+    print(cleaned_query)
+
+    similar_words = []
+    for word in cleaned_query:
+        if word in WORD2VEC_TABLE:
+            similar_words += WORD2VEC_TABLE[word]
+
+    print(similar_words)
+
+    return main_search(' '.join(similar_words))
+
 #wenn ihr mit Frontend arbeiten möchtet:
 if __name__ == 'Backend.suchfunktion':
     infile1 = open('Backend/tokens', 'rb')
@@ -68,6 +82,9 @@ if __name__ == 'Backend.suchfunktion':
     infile2 = open('Backend/lookup_table', 'rb')
     LOOKUP_TABLE = pickle.load(infile2)
     infile2.close()
+    infile3 = open('Backend/word2vec_table', 'rb')
+    WORD2VEC_TABLE = pickle.load(infile3)
+    infile3.close()
 
 
 

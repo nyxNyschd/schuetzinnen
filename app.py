@@ -18,6 +18,7 @@ def start():
         print("Time 1: ", time_1)
         similar_results = suchfunktion.similar_search(suchwort)
         time_2=time.time()-time_1
+
         print("Time 2: ", time_2)
         similar_results = [text for text in similar_results if text not in results]
         time_3=time.time()-time_2

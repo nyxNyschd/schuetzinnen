@@ -86,9 +86,9 @@ if __name__ == 'Backend.suchfunktion':
     infile2 = open('Backend/lookup_table', 'rb')
     LOOKUP_TABLE = pickle.load(infile2)
     infile2.close()
-    # infile3 = open('Backend/word2vec_table', 'rb')
-    # WORD2VEC_TABLE = pickle.load(infile3)
-    # infile3.close()
+    infile3 = open('Backend/word2vec_table', 'rb')
+    WORD2VEC_TABLE = pickle.load(infile3)
+    infile3.close()
 
 #wenn ihr mit Backend arbeiten möchtet:
 # if __name__ == '__main__':

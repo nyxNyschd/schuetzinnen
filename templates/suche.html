@@ -14,37 +14,25 @@
 </header>
 <body>
 <h4 id="desc">Finde die passenden Ausschreibungen für dein Unternehmen</h4>
-<form method="POST" id="myForm" name="myForm" >
-    Bitte Suchbegriff eingeben: <input id="input" type="text" name="input">
+<form method="POST" id="myForm" name="myForm" >Bitte Suchbegriff eingeben:
+    <input id="input" type="text" name="input" placeholder="Gib dein Suchwort hier ein!">
     <input class="w3-bar-item w3-button" id="submit" type="submit" value="los geht's!">
 </form>
 
 <div id="textfeld">
-<h4>Die für deine Suche relevanten Ausschreibungen:</h4> 
-    <form method="GET" id="results" name="results"> 
-        <table id="table">
-            {% for result in results %}
-                <tr>
-                    <td>
-                    {{ result }}
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-    </form>
-<!--<button id="showmores" onclick="showMore()" type="submit">Mehr anzeigen</button>
-    <form method="POST" id="showmores" name="showmores">
-        <table id="table">
-            {% for showmore in showmores %}
-                <tr>
-                    <td>
-                        {{ showmore }}
-                    </td>
-                </tr>
-            {% endfor %}
-        </table>
-    </form>
-<input type="submit" name="submit_button" value="Do Something">-->
+<h4>Die für deine Suche relevanten Ausschreibungen:</h4>
+<ol class="result">
+    {% for result in results %}
+        <li>{{ result }}</li>
+    {% endfor %}
+</ol>
+
+<h4>Ähnliche Ausschreibungen : </h4>
+<ol class="result">
+    {% for result in similar_results %}
+        <li>{{ result }}</li>
+    {% endfor %}
+</ol>
 
 </div>
 </body>
@@ -58,9 +46,5 @@
             x.style.display = "block";
         }
     }
-
-<!--function showMore()
-var y = document.getElementById("showmore");-->
-
 </script>
 </html>

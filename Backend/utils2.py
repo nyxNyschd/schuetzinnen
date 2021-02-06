@@ -66,6 +66,6 @@ if __name__ == '__main__':
 
     # lookup tabelle erstellen
     lookup_table = {}
-    infile = open('word2vec_tabelle', 'wb')
+    infile = open('word2vec_table', 'wb')
     pickle.dump(lookup_table, infile)
     infile.close()

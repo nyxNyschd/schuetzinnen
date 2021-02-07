@@ -7,20 +7,28 @@ from spacy.tokenizer import Tokenizer
 import math
 import pickle
 from collections import Counter
+import multiprocessing
+from gensim.models import Word2Vec
 
-nlp = English()
-tokenizer = Tokenizer(nlp.vocab)
-#long_desc_eng = pd.read_csv('../500_staging_xml_2020.csv', delimiter=',') #<------- Backend
-long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',') #<------- Frontend
-long = pd.DataFrame(long_desc_eng)
-nlp = spacy.load("en_core_web_lg")
-cleaned=[]
+
+def get_corpus():
+    #long_desc_eng = pd.read_csv('../500_staging_xml_2020.csv', delimiter=',')  # <------- Backend
+    #long_desc_eng = pd.read_csv('../daten.csv', delimiter=',') #<------- Backend
+    #long_desc_eng = pd.read_csv(os.getcwd()+'/500_staging_xml_2020.csv', delimiter=',') #<------- Frontend
+    long_desc_eng = pd.read_csv(os.getcwd()+'/daten.csv', delimiter=',') #<------- Frontend
+    return pd.DataFrame(long_desc_eng)
+
+
 def clean_corpus():
+    nlp = spacy.load("en_core_web_lg")
+    cleaned = []
+    long = get_corpus()
 
     for i in range(len(long)):
         text = long['long_desc_eng'][i]
+        text = re.sub("[^A-Za-z']+", ' ', str(text)).lower()
         lemma = [tok.lemma_ for tok in nlp(text)]
-        no_punct = [tok for tok in lemma if re.match('\w+', tok)]
+        no_punct = [tok for tok in lemma if re.match('[\w]+', tok)]
         no_zeichen = [tok for tok in no_punct if not re.match('\. \+ \* \( \) \[ \] \- \$ \|', tok)]
         no_whitespaces = [tok for tok in no_zeichen if not re.match('\s+', tok)]
         filtered_sentence = []
@@ -52,7 +60,7 @@ def idf_compute(cleaned):
 
     return word_idf
 
-def list_ranking():
+def list_ranking(cleaned):
     tf = tf_compute(cleaned)
     idf = idf_compute(cleaned)
     tfidf = {}
@@ -65,28 +73,68 @@ def list_ranking():
 
     return tfidf
 
+
+def similar_words_tabelle(cleaned):
+    w2v_model = Word2Vec(min_count=1,
+                         window=5,
+                         size=300,
+                         alpha=0.03,
+                         min_alpha=0.0007,
+                         negative=5,
+                         workers=multiprocessing.cpu_count() - 1)
+
+    w2v_model.build_vocab(cleaned, progress_per=10000)
+
+    # Training of the model
+    w2v_model.train(cleaned, total_examples=w2v_model.corpus_count, epochs=30, report_delay=1)
+
+    # lookup tabelle erstellen
+    unique_words = set()
+    for text in cleaned:
+        unique_words = set(unique_words).union(set(text))
+    lookup_table = {}
+    for word in unique_words:
+        try:
+            similar = w2v_model.wv.most_similar(positive=[word])[:2]
+            similar_words = [i[0] for i in similar]
+            lookup_table[word] = similar_words
+        except KeyError:
+            continue
+
+    return lookup_table
+
 #wenn ihr mit Frontend arbeiten möchtet:
-if __name__ == 'utils':
-    docs = clean_corpus()
-    outfile1 = open('Backend/tokens', 'wb')
-    pickle.dump(docs, outfile1)
-    outfile1.close()
-
-    ranked_list = list_ranking()
-    filename = 'Backend/lookup_table'
-    outfile2 = open(filename, 'wb')
-    pickle.dump(ranked_list, outfile2)
-    outfile2.close()
-
-#wenn ihr mit Backend arbeiten möchtet:
-# if __name__ == '__main__':
+# if __name__ == 'utils':
 #     docs = clean_corpus()
-#     outfile1 = open('tokens', 'wb')
+#     outfile1 = open('Backend/tokens', 'wb')
 #     pickle.dump(docs, outfile1)
 #     outfile1.close()
 #
-#     ranked_list = list_ranking()
-#     filename = 'lookup_table'
+#     ranked_list = list_ranking(docs)
+#     filename = 'Backend/lookup_table'
 #     outfile2 = open(filename, 'wb')
 #     pickle.dump(ranked_list, outfile2)
 #     outfile2.close()
+#
+#     table_w2v = similar_words_tabelle(docs)
+#     outfile3 = open('word2vec_table', 'wb')
+#     pickle.dump(table_w2v, outfile3)
+#     outfile3.close()
+
+#wenn ihr mit Backend arbeiten möchtet:
+if __name__ == '__main__':
+    docs = clean_corpus()
+    outfile1 = open('tokens', 'wb')
+    pickle.dump(docs, outfile1)
+    outfile1.close()
+
+    ranked_list = list_ranking(docs)
+    outfile2 = open('lookup_table', 'wb')
+    pickle.dump(ranked_list, outfile2)
+    outfile2.close()
+
+    table_w2v = similar_words_tabelle(docs)
+    outfile3 = open('word2vec_table', 'wb')
+    pickle.dump(table_w2v, outfile3)
+    outfile3.close()
+

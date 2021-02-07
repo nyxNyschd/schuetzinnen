@@ -2,7 +2,7 @@ import pickle
 import re
 import spacy
 from fuzzywuzzy import process
-from Backend.utils import long
+from Backend.utils import get_corpus
 
 nlp = spacy.load("en_core_web_lg")
 
@@ -50,6 +50,7 @@ def main_search(query):
         if word in LOOKUP_TABLE.keys():
             result = merge_dict_summ(result, LOOKUP_TABLE[word])
     result = sorted(result, key=result.get, reverse=True)
+    long = get_corpus()
 
     return [long['long_desc_eng'][i] for i in result]
 

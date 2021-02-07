@@ -2,9 +2,8 @@ import pickle
 import re
 import spacy
 from fuzzywuzzy import process
-from spacy.lang.en import English
 from Backend.utils import long
-nlp = English()
+
 nlp = spacy.load("en_core_web_lg")
 
 
@@ -21,6 +20,7 @@ def substring_cleaning(substring):
             cleaned_query.append(word)
     return cleaned_query
 
+
 def fuzzy_logic(substring):
     highest_value = 0
     most_relevant_word = ' '
@@ -33,46 +33,39 @@ def fuzzy_logic(substring):
                 most_relevant_word = temp[0]
     return most_relevant_word
 
+
 def merge_dict_summ(dict1, dict2):
     # print({k: index[query[0]].get(k, 0) + index[query[1]].get(k, 0) for k in set(index[query[0]]) | set(index[query[1]])}
     return {k: dict1.get(k, 0) + dict2.get(k, 0) for k in set(dict1) | set(dict2)}
 
-def main_search(query):
-    cleaned_query = substring_cleaning(query)
-    print(cleaned_query)
-    result = {}
-    gotIt = []
 
-    for word in cleaned_query:
+def preprocess_query(query_words):
+    return [w if w in LOOKUP_TABLE.keys() else fuzzy_logic(w) for w in query_words]
+
+
+def main_search(query):
+    result = {}
+
+    for word in query:
         if word in LOOKUP_TABLE.keys():
-            #print(word, LOOKUP_TABLE[word])
-            # for i in LOOKUP_TABLE[word].keys():
-            #     print(i, long['long_desc_eng'][i])
             result = merge_dict_summ(result, LOOKUP_TABLE[word])
-        else:
-            fuzzy = fuzzy_logic(word)
-            print(fuzzy)
-            result = merge_dict_summ(result, LOOKUP_TABLE[fuzzy])
     result = sorted(result, key=result.get, reverse=True)
-    print(result)
-    for i in result:
-        gotIt.append(long['long_desc_eng'][i])
-    for i in range(len(gotIt)):
-        print(gotIt[i])
-    return gotIt
+
+    return [long['long_desc_eng'][i] for i in result]
+
 
 def similar_search(query):
-    cleaned_query = substring_cleaning(query)
-    print(cleaned_query)
+    print(query)
 
     similar_words = []
-    for word in cleaned_query:
+    for word in query:
         if word in WORD2VEC_TABLE:
             similar_words += WORD2VEC_TABLE[word]
 
     print(similar_words)
 
-    return main_search(' '.join(similar_words))
+    return main_search(similar_words)
+
 
 #wenn ihr mit Frontend arbeiten möchtet:
 if __name__ == 'Backend.suchfunktion':

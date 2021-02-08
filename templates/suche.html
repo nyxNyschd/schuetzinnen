@@ -10,7 +10,8 @@
     <script language="JavaScript" type="text/javascript">  </script>
 </head>
 <header class="w3-container w3-center w3-padding-32">
-    <h1 id="welcome"> WILLKOMMEN ZUM AUSSCHREIBUNGSFINDER </h1>
+    <img id="foto" src="../static/img.png" alt="NORTAL AG LOGO"/>
+    <h1 id="welcome"> WILLKOMMEN ZUM AUSSCHREIBUNGSFINDER</h1>
 </header>
 <body>
 <h4 id="desc">Finde die passenden Ausschreibungen für dein Unternehmen</h4>
@@ -19,7 +20,17 @@
     <input class="w3-bar-item w3-button" id="submit" type="submit" value="los geht's!">
 </form>
 
+<div id="wörter">
+<h5>Ähnliche Suchbegriffe:</h5>
+<ul class="result" style="list-style-type:none;">
+    {% for word in similar_word %}
+        <li>{{ word }}</li>
+    {% endfor %}
+</ul>
+</div>
+
 <div id="textfeld">
+
 <h4>Die für deine Suche relevanten Ausschreibungen:</h4>
 <ol class="result">
     {% for result in results %}
@@ -27,7 +38,7 @@
     {% endfor %}
 </ol>
 
-<h4>Ähnliche Ausschreibungen : </h4>
+<h4>Ähnliche Ausschreibungen: </h4>
 <ol class="result">
     {% for result in similar_results %}
         <li>{{ result }}</li>

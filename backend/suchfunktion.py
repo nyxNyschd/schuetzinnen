@@ -19,6 +19,7 @@ def substring_cleaning(substring):
             cleaned_query.append(word)
     return cleaned_query
 
+
 def fuzzy_logic(substring):
     highest_value = 0
     most_relevant_word = ' '
@@ -31,53 +32,45 @@ def fuzzy_logic(substring):
                 most_relevant_word = temp[0]
     return most_relevant_word
 
+
 def merge_dict_summ(dict1, dict2):
-    # print({k: index[query[0]].get(k, 0) + index[query[1]].get(k, 0) for k in set(index[query[0]]) | set(index[query[1]])}
     return {k: dict1.get(k, 0) + dict2.get(k, 0) for k in set(dict1) | set(dict2)}
+
 
 def preprocess_query(query_words):
     return [w if w in LOOKUP_TABLE.keys() else fuzzy_logic(w) for w in query_words]
 
+
 def main_search(query):
     result = {}
-
     for word in query:
         if word in LOOKUP_TABLE.keys():
             result = merge_dict_summ(result, LOOKUP_TABLE[word])
     result = sorted(result, key=result.get, reverse=True)
     long = get_corpus()
+    return [long['long_desc_eng'][i] for i in result][:50]
 
-    return [long['long_desc_eng'][i] for i in result]
 
-def similar_search(query):
-    print(query)
+def similar_search(similar_words):
+    similar_words = similar_word(similar_words)
+    print(similar_words)
+    return main_search(similar_words)[:50]
 
+
+def similar_word(query):
     similar_words = []
     for word in query:
         if word in WORD2VEC_TABLE:
             similar_words += WORD2VEC_TABLE[word]
-    print(similar_words)
+    return similar_words
 
-    return main_search(similar_words)
-
-#wenn ihr mit Frontend arbeiten möchtet:
-if __name__ == 'Backend.suchfunktion':
+if __name__ == 'backend.suchfunktion':
     infile1 = open('Backend/tokens', 'rb')
     CLEANED = pickle.load(infile1)
     infile1.close()
-    infile2 = open('Backend/lookup_table', 'rb')
+    infile2 = open('backend/lookup_table', 'rb')
     LOOKUP_TABLE = pickle.load(infile2)
     infile2.close()
-    infile3 = open('Backend/word2vec_table', 'rb')
+    infile3 = open('backend/word2vec_table', 'rb')
     WORD2VEC_TABLE = pickle.load(infile3)
     infile3.close()
-
-#wenn ihr mit Backend arbeiten möchtet:
-# if __name__ == '__main__':
-#     infile1 = open('tokens', 'rb')
-#     CLEANED = pickle.load(infile1)
-#     infile1.close()
-#     infile2 = open('lookup_table', 'rb')
-#     LOOKUP_TABLE = pickle.load(infile2)
-#     infile2.close()
-#     main_search('permanent daily')

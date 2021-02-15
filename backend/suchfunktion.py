@@ -5,8 +5,12 @@ import pandas as pd
 import spacy
 from spacy.lang.en import English
 from spacy.tokenizer import Tokenizer
+<<<<<<< HEAD
 from fuzzy_logic import fuzzy_logic
 
+=======
+from fuzzywuzzy import process
+>>>>>>> f8acc12... Review Code
 
 nlp = English()
 tokenizer = Tokenizer(nlp.vocab)
@@ -41,6 +45,22 @@ def substring_cleaning(substring):
         return cleaned_substring
 
 
+<<<<<<< HEAD
+=======
+def fuzzy_logic(substring):
+    highest_value = 0
+    most_relevant_word = ' '
+    for i in range(len(cleaned)):
+        Ratios = process.extract(substring, cleaned[i])
+        for index in range(len(Ratios)):
+            if highest_value < (Ratios[index][1]) and len(Ratios[index][0]) > 2:
+                temp = process.extractOne(substring, cleaned[i])
+                highest_value = temp[1]
+                most_relevant_word = temp[0]
+    return most_relevant_word
+
+
+>>>>>>> f8acc12... Review Code
 def list_ranking(list):
     ranked_list = []
     corpus_tf = []
@@ -78,6 +98,7 @@ def list_ranking(list):
     return tfidf
 
 
+<<<<<<< HEAD
 def suche_substring(substring):
     result = all_values_containing_substring(substring)
     if len(result) == 0:
@@ -89,6 +110,11 @@ def suche_substring(substring):
 
 def all_values_containing_substring(substring):
     cleaned_searched_word = substring_cleaning(substring)
+=======
+def all_values_containing_substring(substring):
+    fuzzy = fuzzy_logic(substring)
+    cleaned_searched_word = substring_cleaning(fuzzy)
+>>>>>>> f8acc12... Review Code
     print("Das relevanteste Wort: " + cleaned_searched_word)
     ranked_dict = list_ranking(cleaned)
     gotIt = []
@@ -99,7 +125,12 @@ def all_values_containing_substring(substring):
             if cleaned_searched_word in s:
                 gotIt.append(shorty['long_desc_eng'][list[j][0]])
                 gotIt.append("......................................................................................")
+<<<<<<< HEAD
     return gotIt[:9]
+=======
+    for index in range(len(gotIt)):
+        return gotIt[:9]
+>>>>>>> f8acc12... Review Code
 
 
 # def values_containing_substring(substring):
@@ -119,5 +150,8 @@ def all_values_containing_substring(substring):
 #         return gotIt[9:]
 
 # all_values_containing_substring("limit")
+<<<<<<< HEAD
 #print(suche_substring("wark"))
 
+=======
+>>>>>>> f8acc12... Review Code

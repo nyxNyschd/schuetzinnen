@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Finde deine Ausschreibung</title>
+    <link rel="stylesheet" href="../static/Stylesheet.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+    <script language="JavaScript" type="text/javascript">  </script>
+</head>
+<header class="w3-container w3-center w3-padding-32">
+    <img id="foto" src="../static/img.png" alt="NORTAL AG LOGO"/>
+    <h1 id="welcome"> WILLKOMMEN ZUM AUSSCHREIBUNGSFINDER</h1>
+</header>
+<body>
+<h4 id="desc">Finde die passenden Ausschreibungen für dein Unternehmen</h4>
+<form method="POST" id="myForm" name="myForm" >Bitte Suchbegriff eingeben:
+    <input id="input" type="text" name="input" placeholder="Gib dein Suchwort hier ein!">
+    <input class="w3-bar-item w3-button" id="submit" type="submit" value="los geht's!">
+</form>
+
+<div id="wörter">
+<h5>Ähnliche Suchbegriffe:</h5>
+<ul class="result" style="list-style-type:none;">
+    {% for word in similar_word %}
+        <li>{{ word }}</li>
+    {% endfor %}
+</ul>
+</div>
+
+<div id="textfeld">
+
+<h4>Die für deine Suche relevanten Ausschreibungen:</h4>
+<ol class="result">
+    {% for result in results %}
+        <li>{{ result }}</li>
+    {% endfor %}
+</ol>
+
+<h4>Ähnliche Ausschreibungen: </h4>
+<ol class="result">
+    {% for result in similar_results %}
+        <li>{{ result }}</li>
+    {% endfor %}
+</ol>
+
+</div>
+</body>
+<footer>
+
+</footer>
+<script>
+    function myFunction() {
+        var x = document.getElementById("textfeld");
+        if (window.getComputedStyle(x).display === "none") {
+            x.style.display = "block";
+        }
+    }
+</script>
+</html>
